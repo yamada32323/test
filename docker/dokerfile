@@ -1,0 +1,19 @@
+# Base image
+FROM ubuntu:latest
+
+# Install Python3.9 and pip
+RUN apt-get update && \
+    apt-get install -y python3.9 python3.9-dev python3-pip
+
+# Set working directory
+WORKDIR /app
+
+# Copy requirements file and install dependencies
+COPY requirements.txt .
+RUN pip3 install --no-cache-dir -r requirements.txt
+
+# Copy all files from current directory to working directory
+COPY . .
+
+# Set default command to run when container is started
+CMD [ "python3", "qrcode.py" ]
